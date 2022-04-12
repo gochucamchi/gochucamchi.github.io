@@ -1,1 +1,0 @@
-# gochucamchi.github.io
