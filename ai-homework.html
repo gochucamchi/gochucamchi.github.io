@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>Teachable Machine Image Model</div>
+<button type="button" onclick="init()">Start</button>
+<div id="webcam-container"></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "./my_model/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // or files from your local hard drive
+        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) { // and class labels
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop() {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(webcam.canvas);
+       if(prediction[0].className == "wall" && prediction[0].probability.toFixed(2) >= 0.95) {//
+           labelContainer.childNodes[0].innerHTML = "이것은 벽 입니다 벽인것을 인지중이니 가만히 있어야 합니다"//프린트 해 주는 사항인데 이것을 
+       }
+       else if (prediction[1].className == "pen" && prediction[1].probability.toFixed(2) >= 0.95) {//
+            //tt(prediction[1].probability.toFixed(2)) // 를 실행해서 prediction[1].probability.toFixed(2) 의 정보값을 넘겨준다 
+            // if(b == 1){
+            //     labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
+            // }
+           labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
+           //원래라면 담배를 써서  ~초 이상 0.95보다 크다면 이라는 조건을 붙여서 조건에 부합하면 땅콩을 내 보내는 시스템이 되어야 한다
+           //하지만 구현하기에는 시간도 모자라고 그래서 적당히 구현했다. 아마 함수를 하나 더 만들어서 prediction[1].probability.toFixed(2) >= 0.95 여기 구문이 맞는지를 for문과 if문 그리고 
+           //시간지연 함수 delay를 써서구현하면 될것 같다 자세하게 구현할려면 for문으로 20번 반복시키고 시간지연함수 delay를 0.1초로 잡고 이후 if문 안에 조건식으로 prediction[1].probability.toFixed(2) >= 0.95를
+           //써서 저게 맞으면 특정 변수값에 ++를 해줘서 for문이 끝났을 때 그 변수값이 20이면 또 다른 블리언 변수값이 true로 바껴서 반환하게 되는 구조를 만들면 될 것 같다.
+           //하다보니 머리로 구현이 되서 c언어로 코드를 끄적여 본다.
+           
+           //int tt(float prediction[1].probability.toFixed(2)){ int값 반환 prediction[1].probability.toFixed(2) 라는 값을 float값으로 입력받음
+           //int a = 0 , b = 0; b는 전역변수로 선언해야할듯
+           //for(int i = 0; i<20; i++)
+        //    {
+        //        await delay(0.1); // 0.1초 기다림
+        //        if(prediction[1].probability.toFixed(2) >= 0.95)
+        //        {
+        //            a++;
+        //        }
+        //        if(a == 20)
+        //        {
+        //            b = 1;
+        //        }
+        //        else{
+        //            b = 0;
+        //        }
+        //        return b;
+        //    }
+           //}
+       }
+       else if (prediction[2].className == "hand" && prediction[2].probability.toFixed(2) >= 0.95) {
+           labelContainer.childNodes[0].innerHTML = "이것은 손 입니다 이것은 손때문에 오류가 발생할까봐 혹시나 하고 넣은 것 입니다"
+       }
+       else 
+       {
+        labelContainer.childNodes[0].innerHTML = "위에와 동일한 과정을 거쳐서 몇초이상 그거면 밖으로 배출되게 하거나 특정한 곳으로 따로 보관시키고 땅콩을 안 내보내게 한다"
+       }
+       
+        // for (let i = 0; i < maxPredictions; i++) {
+        //     const classPrediction =
+        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        //     labelContainer.childNodes[i].innerHTML = classPrediction;
+        // }
+    }
+</script>
+
+</body>
+</html>
