@@ -59,15 +59,15 @@
     async function predict() {
         // predict can take in an image, video or canvas html element
         const prediction = await model.predict(webcam.canvas);
-       if(prediction[0].className == "wall" && prediction[0].probability.toFixed(2) >= 0.95) {//
-           labelContainer.childNodes[0].innerHTML = "이것은 벽 입니다 벽인것을 인지중이니 가만히 있어야 합니다"//프린트 해 주는 사항인데 이것을 
-       }
-       else if (prediction[1].className == "pen" && prediction[1].probability.toFixed(2) >= 0.95) {//
-            //tt(prediction[1].probability.toFixed(2)) // 를 실행해서 prediction[1].probability.toFixed(2) 의 정보값을 넘겨준다 
-            // if(b == 1){
-            //     labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
-            // }
-           labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
+    //    if(prediction[0].className == "wall" && prediction[0].probability.toFixed(2) >= 0.95) {//
+    //        labelContainer.childNodes[0].innerHTML = "이것은 벽 입니다 벽인것을 인지중이니 가만히 있어야 합니다"//프린트 해 주는 사항인데 이것을 
+    //    }
+    //    else if (prediction[1].className == "pen" && prediction[1].probability.toFixed(2) >= 0.95) {//
+    //         //tt(prediction[1].probability.toFixed(2)) // 를 실행해서 prediction[1].probability.toFixed(2) 의 정보값을 넘겨준다 
+    //         // if(b == 1){
+    //         //     labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
+    //         // }
+    //        labelContainer.childNodes[0].innerHTML = "이것은 펜 입니다. 땅콩을 내보내야 합니다"
            //원래라면 담배를 써서  ~초 이상 0.95보다 크다면 이라는 조건을 붙여서 조건에 부합하면 땅콩을 내 보내는 시스템이 되어야 한다
            //하지만 구현하기에는 시간도 모자라고 그래서 적당히 구현했다. 아마 함수를 하나 더 만들어서 prediction[1].probability.toFixed(2) >= 0.95 여기 구문이 맞는지를 for문과 if문 그리고 
            //시간지연 함수 delay를 써서구현하면 될것 같다 자세하게 구현할려면 for문으로 20번 반복시키고 시간지연함수 delay를 0.1초로 잡고 이후 if문 안에 조건식으로 prediction[1].probability.toFixed(2) >= 0.95를
@@ -93,20 +93,20 @@
         //        return b;
         //    }
            //}
-       }
-       else if (prediction[2].className == "hand" && prediction[2].probability.toFixed(2) >= 0.95) {
-           labelContainer.childNodes[0].innerHTML = "이것은 손 입니다 이것은 손때문에 오류가 발생할까봐 혹시나 하고 넣은 것 입니다"
-       }
-       else 
-       {
-        labelContainer.childNodes[0].innerHTML = "위에와 동일한 과정을 거쳐서 몇초이상 그거면 밖으로 배출되게 하거나 특정한 곳으로 따로 보관시키고 땅콩을 안 내보내게 한다"
-       }
+    //    }
+    //    else if (prediction[2].className == "hand" && prediction[2].probability.toFixed(2) >= 0.95) {
+    //        labelContainer.childNodes[0].innerHTML = "이것은 손 입니다 이것은 손때문에 오류가 발생할까봐 혹시나 하고 넣은 것 입니다"
+    //    }
+    //    else 
+    //    {
+    //     labelContainer.childNodes[0].innerHTML = "위에와 동일한 과정을 거쳐서 몇초이상 그거면 밖으로 배출되게 하거나 특정한 곳으로 따로 보관시키고 땅콩을 안 내보내게 한다"
+    //    }
        
-        // for (let i = 0; i < maxPredictions; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        //     labelContainer.childNodes[i].innerHTML = classPrediction;
-        // }
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
     }
 </script>
 
