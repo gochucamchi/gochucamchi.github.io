@@ -102,11 +102,11 @@
         labelContainer.childNodes[0].innerHTML = "위에와 동일한 과정을 거쳐서 몇초이상 그거면 밖으로 배출되게 하거나 특정한 곳으로 따로 보관시키고 땅콩을 안 내보내게 한다"
        }
        
-        // for (let i = 0; i < maxPredictions; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        //     labelContainer.childNodes[i].innerHTML = classPrediction;
-        // }
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
     }
 </script>
 
