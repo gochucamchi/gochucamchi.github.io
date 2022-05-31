@@ -99,7 +99,7 @@
        }
        else if (prediction[2].className == "hand" && prediction[2].probability.toFixed(2) >= 0.95) {
         labelContainer.childNodes[0].innerHTML = prediction[2].className + ": " + prediction[2].probability.toFixed(2);   
-        labelContainer.childNodes[1].innerHTML = "이것은 손 입니다 이것은 손때문에 오류가 발생할까봐 혹시나 하고 넣은 것 입니다"
+        labelContainer.childNodes[1].innerHTML = "쓰레기가 아닙니다. 땅콩을 내 보내서는 안됩니다."
        }
        else 
        {
