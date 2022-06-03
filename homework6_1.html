@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- JSClockDigital.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A JavaScript Clock</title>
+<script type="text/javascript">
+window.onload = initClock;
+//위와 같이 window.onload라는 메서드를 오버라이딩(재정의) 해주면 되는데, 해당 함수 내의 코드 스크립트는 웹브라우저 
+// 내의 모든 요소가 준비가 되어야 실행이 되도록 할수 있다. (웹브라우저 자체를 담당하는 window라는 객체가, 웹 문서를 불러올때, 
+// 문서가 사용되는 시점에 실행되는 onload라는 함수를 내가 다시 재정의 한다는 개념이다.)
+//https://velog.io/@leyuri/javaScript-window.onload%EB%9E%80
+function initClock() {
+  var now = new Date();
+  var hr  = now.getHours();
+  var min = now.getMinutes();
+  var sec = now.getSeconds();
+  if (min < 10) min = "0" + min;  // insert a leading zero
+  if (sec < 10) sec = "0" + sec;
+  document.getElementById('clockDisplay').innerHTML//태그안의 ID값을 이용해서    오브젝트에 접근할 수 있습니다.
+        = hr + ":" + min + ":" + sec;//https://meaningone.tistory.com/316
+  setTimeout('initClock()', 500); // 일정시간 뒤에 실행 시키는 코드, 근데 ms기준 0.5초에 한번 씩 바꿔라는 말이 되는것
+}
+</script>
+</head>
+<body>
+<h1 id="clockDisplay"></h1><!-- 아이디를 밑에 박아도 괜찮은게 window.onload 써서 오버 라이딩으로 바꿨음!-->
+</body>
+</html>
