@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./../../css&js/prism.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gocham's Unity Study</title>
+    <style>
+        div.center{
+            width: 50%;
+            margin:auto;
+        }
+        p{
+            font-size: 20px;
+        }
+        @media (max-width: 750px) {
+        div.center {
+            width: 100%;
+        }
+        p{
+            width: 100%;
+            font-size: 20px;
+        }
+        pre{
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+<div class="center">
+    <h1 style="font-size: 50px;">유니티 이동 구현</h1>
+    <h1>
+        Unity 플레이어 오브젝트 및 땅 오브젝트 생성
+    </h1>
+    <p style="font-size: 20px;">
+        GameObject에서 오브젝트를 만들 수 있는데 나는 2d 게임을 간단하게 공부할 수 있는 것을 목표로 하고 있기 때문에 2D Object의 Sprite의 Squre라는 사각형을 2개를 만들 것이다.<br>
+        이후 스케일을 조정해 하나는 길게 만들어 땅으로 쓸 것이고 하나는 player로 쓸 것이다 따라서 이름은 player이고 하나는 soil이다. <br>
+        
+        <img width="100%" src="move3.JPG" alt="Italian Trulli"><br>
+        여기서 움직이게 만들고 싶으면 아래 방법을 따라가면 된다.<br>
+    </p>
+    <h1>유니티 이동의 2가지 방식</h1>
+    <p style="font-size: 20px;">
+        보통 유니티의 이동은 2가지로 나뉜다.
+        하나는 transform의 position을 강제로 수정하는 방법과 또 다른 하나는 rigidbody 요소를 추가해 물리적인 힘을 주는 방법이 존재한다.<br>
+        <h1>첫번째 이동 방식</h1>
+        먼저 스크립트를 만든 이후에 플레이어의 요소에 그 스크립트를 추가시켜주자<br>
+        <img width="100%" src="move5.JPG" alt="Italian Trulli"><br>
+        transform의 position을 바꾸는 명령어는 transform.Translate(new Vector2(x,y) * Time.deltaTime);이다<br>
+        이러한 방식으로 움직일 수 있고 자세한 코드는 이렇다.
+<pre class="line-numbers"><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player_Movement : MonoBehaviour
+{
+    float playerspeed;
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerspeed = 1.0f;
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(new Vector2(2,0) * Time.deltaTime, Space.World);//절대좌표는 자유
+    }
+}</code></pre>
+            <p style="font-size: 20px;">
+            실제로 적용을 시켜보면 오른쪽으로만 계속 이동하는 것을 볼 수 있다.<br>
+            <img width="100%" src="move6.JPG" alt="Italian Trulli"><br>
+            하지만 게임에서는 내가 원할 때 좌우로 움직여야 하니까 코드를 조금 수정해 보자.</p>
+<pre class="line-numbers"><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player_Movement : MonoBehaviour
+{
+    float playerspeed;
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerspeed = 1.0f;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.RightArrow)){
+            transform.Translate(new Vector2(2,0) * Time.deltaTime);
+        }
+        else if(Input.GetKey(KeyCode.LeftArrow)){
+            transform.Translate(new Vector2(-2,0) * Time.deltaTime);
+        }
+    }
+}
+</code></pre><p>
+            두번째 방법은 오브젝트에 Rigidbody2D를 넣은 이후에 스크립트에 Rigidbody2D를 가르키는 변수를 지정한 이후 하는 방법이다.<br>
+            먼저 player에 Rigidbody2D를 넣어주고 BoxColider2D를 적용 시켜준다.<br>
+            <img width="100%" src="move1.JPG" alt="Italian Trulli"><br>
+            그리고 Soil에는 BoxColider2D만 적용시켜주면 된다
+            <img width="100%" src="move2.JPG" alt="Italian Trulli"><br>
+            그러면 게임을 실행했을 때 물리가 적용되어서 바닥에 잘 붙어 있는것을 볼 수 있다
+            <img width="100%" src="move4.JPG" alt="Italian Trulli"><br>
+            이제 코드를 넣어보자
+<pre class="line-numbers"><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player_Movement : MonoBehaviour
+{
+    Rigidbody2D rid; // Rigidbody2D를 담을 수 있는 변수 rid를 만든다.
+    float playerspeed; //실수를 담을 수 있는 float 자료형의 player라는 이름을 가진 변수를 만든다
+    float Horizontal;
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerspeed = 1.0f;//시작할 때 playerspeed라는 변수의 속도를 정해준다
+        rid = GetComponent<Rigidbody2D>();// 이 스크립트가 들어간 객체의 rigidbody2d라는 요소를 찾아서 rid라는 변수에 할당시켜주는 것
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        PlayerWalk(); // 함수를 실행시켜준다
+    }
+    void PlayerWalk() // 함수를 선언하는 것이다.
+    {
+        Horizontal = Input.GetAxis("Horizontal"); // Horizontal 이라는 float 변수에 Unity가 가지는 Horizontal 이라는 인풋데이터랑 연동시킨다 그래서 방향키를 눌렀을 때 -1~1까지의 값을 실수형태로 반환한다.
+         
+        if(Horizontal >= 0.1){ // 만약에 Horizontal이라는 변수가 0.1보다 크다면
+            rid.AddForce(new Vector2(playerspeed,0), ForceMode2D.Force);//오른쪽으로 Rigidbody2D의 rid라는 변수에 힘을 균등하게 줘라라는 명령어이다.
+            transform.rotation = Quaternion.Euler(0,0,0);//방향을 돌리는 코드이다.
+        }
+        else if(Horizontal <= -0.1 ){//역방향 버전
+            rid.AddForce(new Vector2(-playerspeed,0), ForceMode2D.Force);
+            transform.rotation = Quaternion.Euler(0,180,0);
+        }
+    }
+    //&&  Mathf.Abs(rid.velocity.x) < MaxSpeed // x축으로 가속도가 특정이상 속도보다 낮을 때만 작동해라는 의미 if문의 추가 조건으로 넣어주면 작동한다.
+}
+</pre></code>
+이렇게 코드를 작성해 주면 내가 원할 때 좌우로 이동이 가능한 코드가 완성된다.<br>
+이상으로 유니티 좌우이동을 구현했다.<br><br>/////////////////////////////////////
+풀 코드
+<pre class="line-numbers"><code class="language-csharp">
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player_Movement : MonoBehaviour
+{
+    Rigidbody2D rid;
+    float playerspeed;
+    float Horizontal;
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerspeed = 1.0f;
+        rid = GetComponent<Rigidbody2D>();// 이 스크립트가 들어간 객체의 rigidbody2d라는 요소를 찾아서 rid라는 변수에 할당시켜주는 것
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    void PlayerWalk()
+    {
+        Horizontal = Input.GetAxis("Horizontal");
+         
+        if(Horizontal >= 0.1){
+            rid.AddForce(new Vector2(playerspeed,0), ForceMode2D.Force);
+            transform.rotation = Quaternion.Euler(0,0,0);
+        }
+        else if(Horizontal <= -0.1 ){
+            rid.AddForce(new Vector2(-playerspeed,0), ForceMode2D.Force);
+            transform.rotation = Quaternion.Euler(0,180,0);
+        }
+    }
+    void PlayerWalk2(){
+        if(Input.GetKey(KeyCode.RightArrow)){
+            transform.Translate(new Vector2(2,0) * Time.deltaTime);
+        }
+        else if(Input.GetKey(KeyCode.LeftArrow)){
+            transform.Translate(new Vector2(-2,0) * Time.deltaTime);
+        }
+    }
+    //&&  Mathf.Abs(rid.velocity.x) < MaxSpeed
+}
+</pre></code>
+<br><br><br><br><br><br> 끝!
+        </p>
+        </p>
+    </div>
+    <script type="text/javascript" src="./../../css&js/prism.js"></script>
+    
+    
+</body>
+</html>
