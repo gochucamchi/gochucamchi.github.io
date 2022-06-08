@@ -14,6 +14,18 @@
         p{
             font-size: 20px;
         }
+        @media (max-width: 750px) {
+        div.center {
+            width: 100%;
+        }
+        p{
+            width: 100%;
+            font-size: 20px;
+        }
+        pre{
+            width: 100%;
+        }
+    }
     </style>
 </head>
 <body>
@@ -58,7 +70,7 @@ public class Player_Movement : MonoBehaviour
     }
 }</code></pre>
             <p style="font-size: 20px;">
-            실제로 적용을 시켜보면 오쪽으로만 계속 이동하는 것을 볼 수 있다.<br>
+            실제로 적용을 시켜보면 오른쪽으로만 계속 이동하는 것을 볼 수 있다.<br>
             <img width="100%" src="move6.JPG" alt="Italian Trulli"><br>
             하지만 게임에서는 내가 원할 때 좌우로 움직여야 하니까 코드를 조금 수정해 보자.</p>
 <pre class="line-numbers"><code class="language-csharp">using System.Collections;
