@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gocham's Unity Study</title>
     <style>
-        div.fream{
-            width: 100%;
-        }
+
         div.center{
             width: 50%;
             margin:auto;
@@ -23,43 +21,47 @@
         p{
             font-size: 20px;
         }
+/*링크 명령어 시작!!!!!!!!!!!!!!!!!!!!!!!!!!*/
         a:link {
         color: red;
         }
-
-        /* visited link */
         a:visited {
         color: green;
         }
-
-        /* mouse over link */
         a:hover {
         color: hotpink;
+        }
+        a:active {
+        color: blue;
         }
         a{
             text-decoration-line: none;
         }
-        /* selected link */
-        a:active {
-        color: blue;
-        }
+/*링크 명령어 끝!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+        
         summary{
             font-size: 25px;
             font-weight: bold;
         }
-
+/*모바일 명령어 시작!!!!!!!!!!!!!!!!!!!!!!!!!!*/
         @media (max-width: 450px) {
         div.center {
-            float: left;
             width: 98%;
             margin:auto;
         }
+        div.left{
+            width: 98%;
+            border: 0ch;
+            margin:auto;
+        }
+/*모바일 명령어 끝!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     }
     </style>
 </head>
 <body>
-    <div class="fream">
         <div class="left">
+            <details>
+                <summary>제작 목록</summary>
             <details open>
                 <summary>Unity</summary>
                 <a  href="move.html">1.Unity 플레이어 이동<br></a>
@@ -75,7 +77,10 @@
                 <summary>molar RPG 제작현황</summary>
                 <a  href="../../molra/molra1.html">1.아직 만든거는 없어서 아무내용은 없는데 일단 만들어 놨음<br></a>
             </details>
+        </details>
         </div>
+
+
         <div class="center">
             <h1 style="font-size: 50px;">유니티 이동 구현</h1>
             <h1>
@@ -248,7 +253,6 @@
                 </p>
                 </p>
             </div>
-    </div>
 
     <script type="text/javascript" src="./../../css&js/prism.js"></script>
     
