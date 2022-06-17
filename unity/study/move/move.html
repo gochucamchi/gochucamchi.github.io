@@ -21,6 +21,10 @@
         p{
             font-size: 20px;
         }
+        summary {
+        cursor: pointer;
+        outline: none;
+    }
 /*링크 명령어 시작!!!!!!!!!!!!!!!!!!!!!!!!!!*/
         a:link {
         color: red;
@@ -59,21 +63,27 @@
     </style>
 </head>
 <body>
+    <!--<button aria-expanded="false" aria-haspopup="menu" aria-label="Open main menu" title="Open main menu" type="button" class="button action has-icon main-menu-toggle">
+        <span class="button-wrap">
+        <span class="icon icon-menu "></span>
+        <span class="visually-hidden">Open main menu</span>
+    </span></button>
+-->
         <div class="left">
-            <details>
-                <summary>제작 목록</summary>
             <details open>
+                <summary>제작 목록</summary>
+            <details >
                 <summary>Unity</summary>
                 <a  href="move.html">1.Unity 플레이어 이동<br></a>
                 <a href="move.html">2.뭐 넣을지 고민중 히히.. 같은사이트 연동되게 만들어 놨음<br></a>
                 <a href="move.html">3.이제 그래도 사이트 느낌 나지 않냐??<br></a>
                 <a href="move.html">4.asdasdasdas dasd ahsdjkahd <br></a>
             </details>
-            <details open>
+            <details >
                 <summary>Html,css,javascript</summary>
                 <a href="move.html">1.아직 계획 없음 <br></a>
             </details>
-            <details open>
+            <details >
                 <summary>molar RPG 제작현황</summary>
                 <a  href="../../molra/molra1.html">1.아직 만든거는 없어서 아무내용은 없는데 일단 만들어 놨음<br></a>
             </details>
@@ -255,7 +265,6 @@
             </div>
 
     <script type="text/javascript" src="./../../css&js/prism.js"></script>
-    
-    
 </body>
+
 </html>
