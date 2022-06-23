@@ -105,7 +105,10 @@
             </p>
             <h1>결론</h1>
             <p style="font-size: 20px;">
-                그래서 결론은 if(bool = true){}형태로 써 버리면 if(bool != null)의 형태가 되어버리는 것이다. 즉 bool형 변수에 값이 존재할때 라는 형태로 쓰이게 된다.
+                그래서 결론은 if(bool = true){}형태로 써 버리면 (bool = true)이 자체를 함수로 보고 반환값이 대입한 변수가 된다.
+                대충 bool& operator=(bool A) 이런식의 함수인데
+                예시를 들자면 if(bSomething = true)에서 bSomething 에 true를 대입해주고 bSomething을 반환해줘서 if(bSomething)으로 돌아가게 됩니다.
+                즉 if(true)와 같은 코드가 되어버린다. 그리고 추가로 if(bool != null)을 넣어도 같은 코드로 실행이 될 것이다.
                 <br><br><br><br><br><br>       
         <br><span>웹 제작자 이메일:gochucamchi@gmail.com<br></span>
         <span>웹 제작자 디스코드:</span><a  href=https://discord.gg/ZEAXyJsf>https://discord.gg/ZEAXyJsf</a>
