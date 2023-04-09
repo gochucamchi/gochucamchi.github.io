@@ -150,21 +150,31 @@
         // 문제 1 정답 체크
         if (selectedValue === "1")
 		{
+			let easter_egg = "매직 캔디"
             let answer = "ISO,ITU-T,IEEE,IETF";
             if (inputs[0].value === answer) {
                 resultElement.innerHTML = "정답입니다!";
             }
+			else if(inputs[0].value === easter_egg)
+			{
+                resultElement.innerHTML = ":3";
+            }
 			else
 			{
-                resultElement.innerHTML = "틀렸습니다!";
-            }
+				resultElement.innerHTML = "틀렸습니다!";
+			}
         }
         // 문제 2 정답 체크
         else if (selectedValue === "2")
 		{
+			let easter_egg = "매직 캔디"
             let answer = "프로토콜은 컴퓨터 네트워크에서 컴퓨터간 통신을 위한 약속이다";
             if (inputs[0].value === answer) {
                 resultElement.innerHTML = "정답입니다!";
+            }
+			else if(inputs[0].value === easter_egg)
+			{
+                resultElement.innerHTML = ":3";
             }
 			else 
 			{
@@ -174,11 +184,16 @@
         // 문제 3 정답 체크
         else if (selectedValue === "3")
 		{
+			let easter_egg = "매직 캔디"
 			let answer1 = "네트워크상에서 연결되어 있는 장치"
             let answer2 = "노드 중에서 컴퓨터를 가리키는 용어";
             let answer3 = "노드가 네트워크와 연결되어 데이터를 주고 받기 위해 사용하는 물리적인 연결부";
             if (inputs[0].value === answer1 && inputs[1].value === answer2 && inputs[2].value === answer3) {
                 resultElement.innerHTML = "정답입니다!";
+            }
+			else if(inputs[0].value === easter_egg)
+			{
+                resultElement.innerHTML = ":3";
             }
 			else
 			{
@@ -188,10 +203,17 @@
         // 문제 4 정답 체크
         else if (selectedValue === "4")
 		{
+			let easter_egg = "매직 캔디"
             let answer = "파일 공유, 하드웨어 공유, 데이터 보안 강화 등의 장점이 있습니다";
             if (inputs[0].value === answer) {
                 resultElement.innerHTML = "정답입니다!";
-            } else {
+            }
+			else if(inputs[0].value === easter_egg)
+			{
+                resultElement.innerHTML = ":3";
+            }
+			else 
+			{
                 resultElement.innerHTML = "틀렸습니다!";
             }
         }
